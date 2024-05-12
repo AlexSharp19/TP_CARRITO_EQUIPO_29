@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Business.Articulo;
+using System;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace TPCarrito_Equipo_29
 {
@@ -11,7 +8,9 @@ namespace TPCarrito_Equipo_29
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            var articuloBusinees = new ArticuloBussines();
+            dgvArticulos.DataSource = articuloBusinees.GetArticulo();
+            dgvArticulos.DataBind();
         }
     }
 }
