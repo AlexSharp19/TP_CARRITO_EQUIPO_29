@@ -12,5 +12,12 @@ namespace TPCarrito_Equipo_29
             dgvArticulos.DataSource = articuloBusinees.GetArticulo();
             dgvArticulos.DataBind();
         }
+
+        protected void btnDetalles_Click(object sender, EventArgs e)
+        {
+            // Código para manejar el evento Click del botón
+            string message = "El botón fue clickeado";
+            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('" + message + "');", true);
+        }
     }
 }
