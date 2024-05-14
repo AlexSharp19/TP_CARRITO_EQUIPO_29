@@ -181,5 +181,67 @@ namespace Dao.Implements
                 throw ex;
             }
         }
+
+        public ArticuloEntity getByID (int id)
+        {
+            
+            DataAccess datos = new DataAccess();
+
+
+            string consulta = @"SELECT  
+                                A.ID, 
+                                A.CODIGO, 
+                                A.NOMBRE, 
+                                A.DESCRIPCION, 
+                                A.IdMarca, 
+                                M.Descripcion AS DSM,
+                                A.IdCategoria, 
+                                C.Descripcion AS DSC,
+                                A.Precio,
+                                I.ImagenUrl
+                                FROM ARTICULOS A 
+                                INNER JOIN MARCAS M ON (A.IdMarca=M.Id)
+                                INNER JOIN CATEGORIAS C ON (A.IdCategoria=C.Id)
+                                INNER JOIN IMAGENES I ON(A.Id = I.IdArticulo)
+                                WHERE A.ID = @id ";
+
+
+            try
+            {
+                datos.setearConsulta(consulta);
+                datos.setearParametro("@id", id);
+                datos.ejecutarLectura();
+
+                   var articulo = new ArticuloEntity();
+
+                if (datos.Reader.Read())
+                {
+                    articulo.Id = (int)datos.Reader["id"];
+                    articulo.CodArticulo = (string)datos.Reader["Codigo"];
+                    articulo.Nombre = (string)datos.Reader["Nombre"];
+                    articulo.Descripcion = (string)datos.Reader["Descripcion"];
+
+                    articulo.Marca = new MarcaEntity();
+                    articulo.Categoria = new CategoriaEntity();
+                    articulo.Imagen = new ImagenEntity();
+
+                    articulo.Marca.Id = (int)datos.Reader["IdMarca"];
+                    articulo.Marca.Descripcion = (string)datos.Reader["DSM"];
+                    articulo.Categoria.Id = (int)datos.Reader["IdCategoria"];
+                    articulo.Categoria.Descripcion = (string)datos.Reader["DSC"];
+                    articulo.Precio = (decimal)datos.Reader["Precio"];
+                    articulo.Imagen.UrlImagen = (string)datos.Reader["ImagenUrl"];
+
+                    
+                }
+                return articulo;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Deployment.Internal;
 
 
 namespace Business.Articulo
@@ -64,6 +65,21 @@ namespace Business.Articulo
             {
                 throw ex;
             }
+        }
+
+        public ArticuloEntity getByID(int id)
+        {
+            ArticuloImp articulo = new ArticuloImp();
+            try
+            {
+                return articulo.getByID(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
     }
 
