@@ -21,7 +21,7 @@
                             <p class="card-text"><%# Eval("Descripcion") %></p>
                             <p class="card-text">Precio: $<%# Eval("Precio") %></p>
                             <asp:LinkButton ID="btnAgregar" runat="server" CssClass="btn btn-primary" Text="Agregar" />
-                            <asp:LinkButton ID="btnDetalles" runat="server" CssClass="btn btn-primary" Onclick="btnDetalles_Click" Text="Ver detalles" />
+                            <asp:LinkButton ID="btnDetalles" runat="server" CssClass="btn btn-primary" Onclick="btnDetalles_Click" CommandArgument='<%# Eval("Id") %>'  Text="Ver detalles" />
                         </div>
                     </div>
                 </div>

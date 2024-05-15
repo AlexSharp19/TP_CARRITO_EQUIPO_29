@@ -1,6 +1,8 @@
 ﻿using Business.Articulo;
+using Microsoft.AspNet.FriendlyUrls;
 using System;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace TPCarrito_Equipo_29
 {
@@ -15,9 +17,9 @@ namespace TPCarrito_Equipo_29
 
         protected void btnDetalles_Click(object sender, EventArgs e)
         {
-            // Código para manejar el evento Click del botón
-            string message = "El botón fue clickeado";
-            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('" + message + "');", true);
+
+            string articuloID = ((System.Web.UI.WebControls.LinkButton)sender).CommandArgument;
+            Response.Redirect("DetalleArticulos.aspx?id=" + articuloID);
         }
     }
 }
