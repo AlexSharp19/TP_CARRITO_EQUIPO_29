@@ -7,33 +7,41 @@ namespace Dao.Implements
 {
     public class ArticuloImp
     {
-        public List<ArticuloEntity> GetArticulo()
+        public List<ArticuloEntity> GetArticulo(int pagina)
         {
             var listArticulos = new List<ArticuloEntity>();
             DataAccess datos = new DataAccess();
 
             #region Consulta
-            string consulta = @"SELECT  
-                                A.ID, 
-                                A.CODIGO, 
-                                A.NOMBRE, 
-                                A.DESCRIPCION, 
-                                A.IdMarca, 
-                                M.Descripcion AS DSM,
-                                A.IdCategoria, 
-                                C.Descripcion AS DSC,
-                                A.Precio,
-                                I.ImagenUrl
+            string consulta = @"WITH ResultadosPaginados AS (
+                                SELECT  
+                                    A.ID, 
+                                    A.CODIGO, 
+                                    A.NOMBRE, 
+                                    A.DESCRIPCION, 
+                                    A.IdMarca, 
+                                    M.Descripcion AS DSM,
+                                    A.IdCategoria, 
+                                    C.Descripcion AS DSC,
+                                    A.Precio,
+                                    I.ImagenUrl,
+                                    ROW_NUMBER() OVER (ORDER BY A.ID) AS RowNumber
                                 FROM ARTICULOS A 
                                 INNER JOIN MARCAS M ON (A.IdMarca=M.Id)
                                 INNER JOIN CATEGORIAS C ON (A.IdCategoria=C.Id)
-                                INNER JOIN IMAGENES I ON(A.Id = I.IdArticulo)";
+                                INNER JOIN IMAGENES I ON(A.Id = I.IdArticulo)
+                                GROUP BY A.Id,A.CODIGO, A.NOMBRE, A.DESCRIPCION, A.IdMarca, 
+                                M.Descripcion,A.IdCategoria, C.Descripcion,A.Precio,I.ImagenUrl
+                            )
+                            SELECT *
+                            FROM ResultadosPaginados
+                            WHERE RowNumber BETWEEN ((@pagina - 1) * 8 + 1) AND (@pagina * 8);";
             #endregion
 
             try
             {
                 datos.setearConsulta(consulta);
-
+                datos.setearParametro("@pagina", pagina);
                 datos.ejecutarLectura();
                 
                 while (datos.Reader.Read())

@@ -9,13 +9,13 @@ namespace Business.Articulo
 {
     public class ArticuloBussines
     {
-        public List<ArticuloEntity> GetArticulo()
+        public List<ArticuloEntity> GetArticulo(int pagina)
         {
             var listArticulos = new List<ArticuloEntity>();
             var ArticuloDao = new ArticuloImp();
             try
             {
-                listArticulos = ArticuloDao.GetArticulo();
+                listArticulos = ArticuloDao.GetArticulo(pagina);
 
                 return listArticulos;
             }

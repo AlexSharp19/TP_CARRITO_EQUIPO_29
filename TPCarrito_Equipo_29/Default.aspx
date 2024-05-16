@@ -30,11 +30,12 @@
     </div>
 
     <!-- Paginador "Siguiente,Anterior" -->
-     <div class="navbar fixed-bottom bg-white d-flex justify-content-center align-items-center">
-        <asp:DataPager ID="lvArticulosDataPager" runat="server" PagedControlID="dgvArticulos">
-            <Fields>
-                <asp:NextPreviousPagerField ButtonType="Button" ShowPreviousPageButton="True" ShowNextPageButton="True" ButtonCssClass="btn btn-primary" />
-            </Fields>
-        </asp:DataPager>
+    <div class="navbar bg-white d-flex justify-content-center align-items-center">
+    <asp:DataPager ID="lvArticulosDataPager" runat="server" PagedControlID="dgvArticulos">
+        <Fields>
+            <asp:NextPreviousPagerField ButtonType="Button" ShowPreviousPageButton="True" ShowNextPageButton="True" ButtonCssClass="btn btn-primary" />
+        </Fields>
+    </asp:DataPager>
     </div>
+    
 </asp:Content>

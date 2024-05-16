@@ -1,8 +1,6 @@
 ﻿using Business.Articulo;
-using Microsoft.AspNet.FriendlyUrls;
 using System;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace TPCarrito_Equipo_29
 {
@@ -11,8 +9,15 @@ namespace TPCarrito_Equipo_29
         protected void Page_Load(object sender, EventArgs e)
         {
             var articuloBusinees = new ArticuloBussines();
-            dgvArticulos.DataSource = articuloBusinees.GetArticulo();
-            dgvArticulos.DataBind();
+            try
+            {
+                dgvArticulos.DataSource = articuloBusinees.GetArticulo(1);
+                dgvArticulos.DataBind();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Ocurrio un error al intentar obtener los articulos: " + ex.Message);
+            }
         }
 
         protected void btnDetalles_Click(object sender, EventArgs e)
