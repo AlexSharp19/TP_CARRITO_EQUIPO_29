@@ -2,6 +2,7 @@
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web.UI;
@@ -48,7 +49,7 @@ namespace TPCarrito_Equipo_29
             var articuloBusinees = new ArticuloBussines();
             try
             {
-                listArticulos = articuloBusinees.GetArticulo(1);
+                listArticulos = articuloBusinees.GetArticulos();
 
                 foreach (var item in listArticulos)
                 {
@@ -109,9 +110,42 @@ namespace TPCarrito_Equipo_29
 
         protected void btnDetalles_Click(object sender, EventArgs e)
         {
-
             string articuloID = ((System.Web.UI.WebControls.LinkButton)sender).CommandArgument;
             Response.Redirect("DetalleArticulos.aspx?id=" + articuloID);
         }
+
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+            int articuloId = int.Parse(((System.Web.UI.WebControls.LinkButton)sender).CommandArgument);
+            var articuloBusinees = new ArticuloBussines();
+
+            try
+            {
+                listArticulos = articuloBusinees.GetArticulos();
+
+                var articulo = listArticulos.FirstOrDefault(s => s.Id == articuloId);
+                if (articulo != null)
+                {
+                    List<ArticuloEntity> articulosSeleccionados;
+                    if (Session["articulosSeleccionados"] == null)
+                    {
+                        articulosSeleccionados = new List<ArticuloEntity>();
+                    }
+                    else
+                    {
+                        articulosSeleccionados = (List<ArticuloEntity>)Session["articulosSeleccionados"];
+                    }
+
+                    articulosSeleccionados.Add(articulo);
+                    Session["articulosSeleccionados"] = articulosSeleccionados;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Ocurrio un error al intentar obtener los articulos: " + ex.Message);
+            }
+            
+        }
+
     }
 }

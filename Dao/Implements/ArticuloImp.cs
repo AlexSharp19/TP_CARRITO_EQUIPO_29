@@ -7,7 +7,7 @@ namespace Dao.Implements
 {
     public class ArticuloImp
     {
-        public List<ArticuloEntity> GetArticulo(int pagina)
+        public List<ArticuloEntity> GetArticulos()
         {
             var listArticulos = new List<ArticuloEntity>();
             DataAccess datos = new DataAccess();
