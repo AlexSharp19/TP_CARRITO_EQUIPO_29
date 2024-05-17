@@ -29,10 +29,10 @@
         </asp:ListView>
     </div>
    
-    <nav aria-label="...">
+    <div class="d-flex justify-content-center mt-3">
         <ul class="pagination pagination-lg" id="pagination" >
             <asp:Literal ID="litPagination" runat="server"></asp:Literal>
         </ul>
-    </nav>
+    </div>
 
 </asp:Content>

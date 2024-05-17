@@ -2,19 +2,50 @@
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Printing;
 using System.Net;
 using System.Text;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace TPCarrito_Equipo_29
 {
     public partial class _Default : Page
     {
+        private List<ArticuloEntity> listArticulos;
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                LoadData();
+                BindListView();
+                GeneratePagination();
+            }
+        }
+
+        private void BindListView()
+        {
+            int pageIndex = 0;
+            if (Request.QueryString["page"] != null)
+            {
+                pageIndex = Convert.ToInt32(Request.QueryString["page"]) - 1;
+            }
+
+            var pagedDataSource = new PagedDataSource
+            {
+                DataSource = listArticulos,
+                AllowPaging = true,
+                PageSize = 8,
+                CurrentPageIndex = pageIndex
+            };
+
+            dgvArticulos.DataSource = pagedDataSource;
+            dgvArticulos.DataBind();
+        }
+
+        private void LoadData()
+        {
             var articuloBusinees = new ArticuloBussines();
-            var listArticulos = new List<ArticuloEntity>();
             try
             {
                 listArticulos = articuloBusinees.GetArticulo(1);
@@ -27,12 +58,9 @@ namespace TPCarrito_Equipo_29
                     }
                 }
 
-                dgvArticulos.DataSource = listArticulos;
-                dgvArticulos.DataBind();
-
-                GeneratePagination();
+                ViewState["articulos"] = listArticulos;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("Ocurrio un error al intentar obtener los articulos: " + ex.Message);
             }
@@ -40,33 +68,26 @@ namespace TPCarrito_Equipo_29
 
         private void GeneratePagination()
         {
-            var articuloBusinees = new ArticuloBussines();
+            int totalPages = (int)Math.Ceiling((double)listArticulos.Count / 8);
 
-            try
+            StringBuilder paginationHtml = new StringBuilder();
+            for (int i = 1; i <= totalPages; i++)
             {
-                int totalRegistros = articuloBusinees.CantidadRegistros();
-                int totalPages = (int)Math.Ceiling((double)totalRegistros / 8);
-
-                StringBuilder paginationHtml = new StringBuilder();
-
-                for (int i = 1; i <= totalPages; i++)
-                {
-                    if (i == 1)
-                    {
-                        paginationHtml.AppendFormat("<li class='page-item active' aria-current='page'><span class='page-link'>{0}</span></li>", i);
-                    }
-                    else
-                    {
-                        paginationHtml.AppendFormat("<li class='page-item'><a  ID='ax' class='page-link' Onclick='ax_Click' href='?page={0}'>{0}</a></li>", i);
-                    }
-                }
-
-                litPagination.Text = paginationHtml.ToString();
+                string activeClass = i == GetCurrentPageIndex() ? "active" : "";
+                paginationHtml.AppendFormat("<li class='page-item {1}'><a class='page-link' href='?page={0}'>{0}</a></li>", i, activeClass);
             }
-            catch(Exception ex)
+
+            litPagination.Text = paginationHtml.ToString();
+        }
+
+        private int GetCurrentPageIndex()
+        {
+            int pageIndex = 1;
+            if (Request.QueryString["page"] != null)
             {
-                throw new Exception("Error: " + ex.Message);
+                pageIndex = Convert.ToInt32(Request.QueryString["page"]);
             }
+            return pageIndex;
         }
 
         private bool CargarImagen(string url)

@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace Domain.Entities
 {
+    [Serializable]
     public class MarcaEntity
     {
         public int Id { get; set; }

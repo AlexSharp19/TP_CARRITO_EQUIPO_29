@@ -1,5 +1,8 @@
-﻿namespace Domain.Entities
+﻿using System;
+
+namespace Domain.Entities
 {
+    [Serializable]
     public class ArticuloEntity
     {   
         public int Id { get; set; }

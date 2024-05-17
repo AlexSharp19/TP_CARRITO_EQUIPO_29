@@ -25,19 +25,6 @@ namespace Business.Articulo
             }
         }
 
-        public int CantidadRegistros()
-        {
-            var ArticuloDao = new ArticuloImp();
-            try
-            {
-                return ArticuloDao.CantidadRegistros();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
         public int agregarArticulo(ArticuloEntity nuevo)
         {
             ArticuloImp artImp = new ArticuloImp();
