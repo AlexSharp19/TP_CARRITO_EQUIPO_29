@@ -24,12 +24,12 @@ namespace TPCarrito_Equipo_29
         protected global::System.Web.UI.WebControls.ListView dgvArticulos;
 
         /// <summary>
-        /// Control lvArticulosDataPager.
+        /// Control litPagination.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataPager lvArticulosDataPager;
+        protected global::System.Web.UI.WebControls.Literal litPagination;
     }
 }

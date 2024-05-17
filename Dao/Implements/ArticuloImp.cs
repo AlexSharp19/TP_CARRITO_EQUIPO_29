@@ -2,6 +2,7 @@
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Dao.Implements
 {
@@ -35,7 +36,7 @@ namespace Dao.Implements
                             )
                             SELECT *
                             FROM ResultadosPaginados
-                            WHERE RowNumber BETWEEN ((@pagina - 1) * 8 + 1) AND (@pagina * 8);";
+                            WHERE RowNumber BETWEEN ((@pagina - 1) * 8 + 1) AND (@pagina * 8)";
             #endregion
 
             try
@@ -67,6 +68,58 @@ namespace Dao.Implements
                 }
 
                 return listArticulos;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public int CantidadRegistros()
+        {
+            DataAccess datos = new DataAccess();
+            int cantRegistros = 0;
+
+            #region Consulta
+            string consulta = @"SELECT COUNT(*) AS CANTREGISTROS
+                                            FROM (
+                                                SELECT  
+                                                    A.ID, 
+                                                    A.CODIGO, 
+                                                    A.NOMBRE, 
+                                                    A.DESCRIPCION, 
+                                                    A.IdMarca, 
+                                                    M.Descripcion AS DSM,
+                                                    A.IdCategoria, 
+                                                    C.Descripcion AS DSC,
+                                                    A.Precio,
+                                                    I.ImagenUrl
+                                                FROM ARTICULOS A 
+                                                INNER JOIN MARCAS M ON (A.IdMarca=M.Id)
+                                                INNER JOIN CATEGORIAS C ON (A.IdCategoria=C.Id)
+                                                INNER JOIN IMAGENES I ON(A.Id = I.IdArticulo)
+                                                GROUP BY A.Id, A.CODIGO, A.NOMBRE, A.DESCRIPCION, A.IdMarca, 
+                                                         M.Descripcion, A.IdCategoria, C.Descripcion, A.Precio, I.ImagenUrl
+                                            ) AS TABLA";
+            #endregion
+
+            try
+            {
+                datos.setearConsulta(consulta);
+                datos.ejecutarLectura();
+
+                if (datos.Reader.Read())
+                {
+                    
+                    cantRegistros = (int)datos.Reader["CANTREGISTROS"];
+                    
+                }
+
+                return cantRegistros;
             }
             catch (Exception ex)
             {

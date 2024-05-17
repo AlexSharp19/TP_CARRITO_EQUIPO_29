@@ -28,14 +28,11 @@
             </ItemTemplate>
         </asp:ListView>
     </div>
+   
+    <nav aria-label="...">
+        <ul class="pagination pagination-lg" id="pagination" >
+            <asp:Literal ID="litPagination" runat="server"></asp:Literal>
+        </ul>
+    </nav>
 
-    <!-- Paginador "Siguiente,Anterior" -->
-    <div class="navbar bg-white d-flex justify-content-center align-items-center">
-    <asp:DataPager ID="lvArticulosDataPager" runat="server" PagedControlID="dgvArticulos">
-        <Fields>
-            <asp:NextPreviousPagerField ButtonType="Button" ShowPreviousPageButton="True" ShowNextPageButton="True" ButtonCssClass="btn btn-primary" />
-        </Fields>
-    </asp:DataPager>
-    </div>
-    
 </asp:Content>
