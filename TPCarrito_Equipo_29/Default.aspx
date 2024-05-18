@@ -19,9 +19,9 @@
                         <div class="card-body">
                             <h5 class="card-title"><%# Eval("Nombre") %></h5>
                             <p class="card-text"><%# Eval("Descripcion") %></p>
-                            <p class="card-text">Precio: $<%# Eval("Precio") %></p>
-                            <asp:LinkButton ID="btnAgregar" runat="server" CssClass="btn btn-primary" OnClick="btnAgregar_Click" CommandArgument='<%# Eval("Id") %>' Text="Agregar" />
-                            <asp:LinkButton ID="btnDetalles" runat="server" CssClass="btn btn-primary" Onclick="btnDetalles_Click" CommandArgument='<%# Eval("Id") %>'  Text="Ver detalles" />
+                            <p class="card-text">Precio: <b>$<%# Eval("Precio") %></b></p> <!--nuevo-->
+                        <asp:LinkButton ID="btnAgregar" runat="server" CssClass="btn btn-success" OnClick="btnAgregar_Click" CommandArgument='<%# Eval("Id") %>' Text="Agregar" />   <!--nuevo-->
+                        <asp:LinkButton ID="btnDetalles" runat="server" CssClass="btn btn-outline-success" Onclick="btnDetalles_Click" CommandArgument='<%# Eval("Id") %>'  Text="Ver detalles" />   <!--nuevo-->
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
     </div>
    
     <div class="d-flex justify-content-center mt-3">
-        <ul class="pagination pagination-lg" id="pagination" >
+        <ul class="pagination pagination-md" id="pagination" >  <!--nuevo-->
             <asp:Literal ID="litPagination" runat="server"></asp:Literal>
         </ul>
     </div>
