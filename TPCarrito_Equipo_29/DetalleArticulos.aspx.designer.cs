@@ -42,13 +42,22 @@ namespace TPCarrito_Equipo_29
         protected global::System.Web.UI.WebControls.Literal litPrecio;
 
         /// <summary>
-        /// Control litMarca.
+        /// Control panelFichaTecnica.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litMarca;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelFichaTecnica;
+
+        /// <summary>
+        /// Control litDescripcion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litDescripcion;
 
         /// <summary>
         /// Control litCategoria.
@@ -60,12 +69,12 @@ namespace TPCarrito_Equipo_29
         protected global::System.Web.UI.WebControls.Literal litCategoria;
 
         /// <summary>
-        /// Control panelFichaTecnica.
+        /// Control litMarca.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelFichaTecnica;
+        protected global::System.Web.UI.WebControls.Literal litMarca;
     }
 }

@@ -2,8 +2,15 @@
 
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    
+  
+    <div class="input-group">
+        <asp:TextBox ID="txtBuscar" class="form-control me-2" runat="server"></asp:TextBox>
+        <!-- Estas son las Tarjetas <input class="form-control me-2" id="txtBuscar" type="text" name="buscar" placeholder="Buscar" aria-label="Buscar" value='<%= GetBuscarValue() %>'>--> 
+    
+        <asp:LinkButton ID="btnBuscar" runat="server" CssClass="btn btn-primary" OnClick="btnBuscar_Click" Text="Buscar" />
+    </div>
 
-   
     
     <!-- Estas son las Tarjetas -->
     <div class="row row-cols-3 row-cols-md-4 g-4">

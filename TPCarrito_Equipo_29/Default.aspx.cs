@@ -19,6 +19,11 @@ namespace TPCarrito_Equipo_29
             if (!IsPostBack)
             {
                 LoadData();
+
+                if (!string.IsNullOrEmpty(Request.QueryString["buscar"]))
+                {
+                    FiltrarArticulos(Request.QueryString["buscar"]);
+                }
                 BindListView();
                 GeneratePagination();
             }
@@ -118,7 +123,7 @@ namespace TPCarrito_Equipo_29
         {
             int articuloId = int.Parse(((System.Web.UI.WebControls.LinkButton)sender).CommandArgument);
             var articuloBusinees = new ArticuloBussines();
-             
+
             try
             {
                 listArticulos = articuloBusinees.GetArticulos();
@@ -140,12 +145,76 @@ namespace TPCarrito_Equipo_29
                     Session["articulosSeleccionados"] = articulosSeleccionados;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("Ocurrio un error al intentar obtener los articulos: " + ex.Message);
             }
+
+        }
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            string texto = txtBuscar.Text;
+            FiltrarArticulos(texto);
+        }
+        private void FiltrarArticulos(string terminoBusqueda)
+        {
+            var articuloBusinees = new ArticuloBussines();
+            try
+
+            {
+                listArticulos = articuloBusinees.GetArticulos();
+                var articulosFiltrados = listArticulos
+         .Where(a => a.Nombre.IndexOf(terminoBusqueda, StringComparison.OrdinalIgnoreCase) >= 0)
+         .ToList();
+                foreach (var item in articulosFiltrados) {
+                    if (!CargarImagen(item.Imagen.UrlImagen)) 
+                    { item.Imagen.UrlImagen = "https://img.freepik.com/vector-gratis/ilustracion-icono-galeria_53876-27002.jpg?size=626&ext=jpg&ga=GA1.1.1687694167.1713916800&semt=ais"; }
+                
+                }
+                // Actualizar el control ListView con los artículos filtrados
+                var pagedDataSource = new PagedDataSource
+                {
+                    DataSource = articulosFiltrados,
+                    AllowPaging = true,
+                    PageSize = 8,
+                    CurrentPageIndex = 0 // Siempre comienza en la primera página después de filtrar
+                };
+
+                dgvArticulos.DataSource = pagedDataSource;
+                dgvArticulos.DataBind();
+
+                // Generar paginación para los artículos filtrados
+                int totalPages = (int)Math.Ceiling((double)articulosFiltrados.Count / 8);
+                StringBuilder paginationHtml = new StringBuilder();
+                for (int i = 1; i <= totalPages; i++)
+                {
+                    string activeClass = i == GetCurrentPageIndex() ? "active" : "";
+                    paginationHtml.AppendFormat("<li class='page-item {1}'><a class='page-link' href='?page={0}&buscar={2}'>{0}</a></li>", i, activeClass, terminoBusqueda);
+                }
+
+                litPagination.Text = paginationHtml.ToString();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
             
         }
-
+        protected string GetBuscarValue()
+        {
+            string searchTerm = string.Empty;
+            try
+            {
+                searchTerm = Request.QueryString["buscar"];
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier excepción si ocurre al obtener el valor del QueryString
+                Console.WriteLine($"Error al obtener el valor de 'buscar': {ex.Message}");
+            }
+            return searchTerm;
+        }
     }
 }

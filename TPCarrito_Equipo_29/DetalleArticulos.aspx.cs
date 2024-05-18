@@ -43,6 +43,7 @@ namespace TPCarrito_Equipo_29
                 litPrecio.Text = articulo.Precio.ToString("F2");
                 litMarca.Text = articulo.Marca.Descripcion;
                 litCategoria.Text = articulo.Categoria.Descripcion;
+                litDescripcion.Text = articulo.Descripcion.ToString();
             }
             else
             {
