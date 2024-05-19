@@ -19,7 +19,7 @@ namespace TPCarrito_Equipo_29
             if (!IsPostBack)
             {
                 LoadData();
-                ddlFiltroPrecio.Items.Insert(0, new ListItem("Seleccionar opción", ""));
+                ddlFiltroPrecio.Items.Insert(0, new ListItem("Seleccionar opción", "0"));
                 ddlFiltroPrecio.Items.Add(new ListItem("De menor a mayor precio", "1"));
                 ddlFiltroPrecio.Items.Add(new ListItem("De mayor a menor precio", "2"));
                 ddlFiltroPrecio.Items[0].Attributes["disabled"] = "disabled";
@@ -132,15 +132,14 @@ namespace TPCarrito_Equipo_29
             
             int valor = int.Parse(ddlFiltroPrecio.SelectedValue);
 
-            if (valor == 1)
-            {
-                FiltrarArticulos(string.Empty, valor);
-            }
-            if(valor == 2)
-            {
-                FiltrarArticulos(string.Empty, valor);
-            }
+            if (valor == 0) { return; }
 
+            if (valor == 1 || valor== 2)
+            {
+                FiltrarArticulos(string.Empty, valor);
+            }
+           
+            ddlFiltroPrecio.Items[0].Attributes["disabled"] = "disabled";
         }
 
         private void ActualizarCarrito()
