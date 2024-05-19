@@ -10,19 +10,19 @@
             </div>
             <div class="col-md-6">
                 <h3><asp:Literal ID="litNombre" runat="server" /></h3>
-                <p>Precio: <b>$<asp:Literal ID="litPrecio" runat="server" /></p></b>
+                <p>Precio: <b>$<asp:Literal ID="litPrecio" runat="server" /></b></p>
                 <asp:LinkButton ID="btnAgregarDetalle" runat="server" CssClass="btn btn-success" OnClick="btnAgregarDetalle_Click" CommandArgument='<%# Eval("Id") %>' Text="Agregar al carrito" />
             
             </div>
 
            <div class="col-md-12">
-             <div id="panelFichaTecnica" runat="server" class="card p-4 mb-4"> <!-- Aplica la clase card de Bootstrap aquí -->
+             <div id="panelFichaTecnica" runat="server" class="card p-4 mb-4"> 
               <h4>Descripción</h4>
             
               <p><asp:Literal ID="litDescripcion" runat="server" /></p>
                
               <h4>Ficha Técnica:</h4>
-                 <ul class="list-group"> <!-- Utiliza la clase list-group de Bootstrap para la lista -->
+                 <ul class="list-group"> 
             <li class="list-group-item"><h4>Categoría:</h4> <p><asp:Literal ID="litCategoria" runat="server" /></p></li>
             <li class="list-group-item"><h4>Marca:</h4> <p> <asp:Literal ID="litMarca" runat="server" /></p></li>
             
@@ -30,7 +30,7 @@
              </div>
             </div>  
         
-            <!-- Panel para la ficha técnica -->
+            
             
 
         </div>
