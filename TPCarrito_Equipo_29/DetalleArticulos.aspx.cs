@@ -97,12 +97,20 @@ namespace TPCarrito_Equipo_29
                                 articulosSeleccionados = (List<ArticuloEntity>)Session["articulosSeleccionados"];
                             }
 
-                            articulosSeleccionados.Add(articulo);
-                            Session["articulosSeleccionados"] = articulosSeleccionados;
-                        }
+                            if (!articulosSeleccionados.Any(a => a.Id == articuloId))
+                            {
+                                articulosSeleccionados.Add(articulo);
+                                Session["articulosSeleccionados"] = articulosSeleccionados;
 
-                        string script = "Swal.fire({ title: 'Éxito', text: 'Artículo agregado correctamente al carrito.', icon: 'success', confirmButtonText: 'OK' });";
-                        ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                                string script = "Swal.fire({ title: 'Éxito', text: 'Artículo agregado correctamente al carrito.', icon: 'success', confirmButtonText: 'OK' });";
+                                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                            }
+                            else
+                            {
+                                string script = "Swal.fire({ title: 'Advertencia', text: 'El artículo ya está en el carrito.', icon: 'warning', confirmButtonText: 'OK' });";
+                                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                            }
+                        }
 
                         ActualizarCarrito();
                     }
