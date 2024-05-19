@@ -4,10 +4,8 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     
   
-    <div class="input-group">
+    <div class="input-group d-flex mb-3">
         <asp:TextBox ID="txtBuscar" class="form-control me-2" runat="server"></asp:TextBox>
-        <!-- Estas son las Tarjetas <input class="form-control me-2" id="txtBuscar" type="text" name="buscar" placeholder="Buscar" aria-label="Buscar" value='<%= GetBuscarValue() %>'>--> 
-    
         <asp:LinkButton ID="btnBuscar" runat="server" CssClass="btn btn-primary" OnClick="btnBuscar_Click" Text="Buscar" />
     </div>
 
@@ -25,7 +23,6 @@
                         <img class="card-img-top" src='<%# Eval("Imagen.UrlImagen") %>' alt="Imagen del artículo">
                         <div class="card-body">
                             <h5 class="card-title"><%# Eval("Nombre") %></h5>
-                            <p class="card-text"><%# Eval("Descripcion") %></p>
                             <p class="card-text">Precio: <b>$<%# Eval("Precio") %></b></p> <!--nuevo-->
                         <asp:LinkButton ID="btnAgregar" runat="server" CssClass="btn btn-success" OnClick="btnAgregar_Click" CommandArgument='<%# Eval("Id") %>' Text="Agregar" />   <!--nuevo-->
                         <asp:LinkButton ID="btnDetalles" runat="server" CssClass="btn btn-outline-success" Onclick="btnDetalles_Click" CommandArgument='<%# Eval("Id") %>'  Text="Ver detalles" />   <!--nuevo-->

@@ -13,6 +13,6 @@ namespace Domain.Entities
         public CategoriaEntity Categoria { get; set; }
         public ImagenEntity Imagen { get; set; }
         public decimal Precio { get; set; }
-        
+        public int Cantidad { get; set; } = 1;
     }
 }

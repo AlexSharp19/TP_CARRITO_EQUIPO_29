@@ -65,6 +65,8 @@ namespace TPCarrito_Equipo_29
                 }
 
                 ViewState["articulos"] = listArticulos;
+
+                ActualizarCarrito();
             }
             catch (Exception ex)
             {
@@ -119,6 +121,24 @@ namespace TPCarrito_Equipo_29
             Response.Redirect("DetalleArticulos.aspx?id=" + articuloID);
         }
 
+        private void ActualizarCarrito()
+        {
+            if (Session["articulosSeleccionados"] != null)
+            {
+                var articulosSeleccionados = (List<ArticuloEntity>)Session["articulosSeleccionados"];
+
+                int totalItems = 0;
+
+                foreach(var item in articulosSeleccionados)
+                {
+                    totalItems += item.Cantidad;
+                }
+
+                string script = $"document.getElementById('cartItemCount').innerText = '{totalItems}';";
+                ScriptManager.RegisterStartupScript(this, GetType(), "updateCartCount", script, true);
+            }
+        }
+
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             int articuloId = int.Parse(((System.Web.UI.WebControls.LinkButton)sender).CommandArgument);
@@ -144,6 +164,11 @@ namespace TPCarrito_Equipo_29
                     articulosSeleccionados.Add(articulo);
                     Session["articulosSeleccionados"] = articulosSeleccionados;
                 }
+
+                string script = "Swal.fire({ title: 'Éxito', text: 'Artículo agregado correctamente al carrito.', icon: 'success', confirmButtonText: 'OK' });";
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+
+                ActualizarCarrito();
             }
             catch (Exception ex)
             {
@@ -151,11 +176,13 @@ namespace TPCarrito_Equipo_29
             }
 
         }
+
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             string texto = txtBuscar.Text;
             FiltrarArticulos(texto);
         }
+
         private void FiltrarArticulos(string terminoBusqueda)
         {
             var articuloBusinees = new ArticuloBussines();
@@ -164,8 +191,9 @@ namespace TPCarrito_Equipo_29
             {
                 listArticulos = articuloBusinees.GetArticulos();
                 var articulosFiltrados = listArticulos
-         .Where(a => a.Nombre.IndexOf(terminoBusqueda, StringComparison.OrdinalIgnoreCase) >= 0)
-         .ToList();
+                                        .Where(a => a.Nombre.IndexOf(terminoBusqueda, StringComparison.OrdinalIgnoreCase) >= 0)
+                                        .ToList();
+
                 foreach (var item in articulosFiltrados) {
                     if (!CargarImagen(item.Imagen.UrlImagen)) 
                     { item.Imagen.UrlImagen = "https://img.freepik.com/vector-gratis/ilustracion-icono-galeria_53876-27002.jpg?size=626&ext=jpg&ga=GA1.1.1687694167.1713916800&semt=ais"; }
