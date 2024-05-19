@@ -3,6 +3,7 @@ using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -16,7 +17,9 @@ namespace TPCarrito_Equipo_29
         {
             if (!IsPostBack)
             {
+
                 string articuloID = Request.QueryString["id"];
+                
                 if (!string.IsNullOrEmpty(articuloID))
                 {
                     CargarDetallesArticulo(int.Parse(articuloID));
@@ -32,6 +35,24 @@ namespace TPCarrito_Equipo_29
 
         }
 
+
+        private bool CargarImagen(string url)
+        {
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = "HEAD";
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    return (response.StatusCode == HttpStatusCode.OK);
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private void CargarDetallesArticulo(int id)
         {
             var articuloBusiness = new ArticuloBussines();
@@ -39,7 +60,13 @@ namespace TPCarrito_Equipo_29
 
             if (articulo != null)
             {
-                imgArticulo.ImageUrl = articulo.Imagen.UrlImagen;
+                if (!CargarImagen(articulo.Imagen.UrlImagen)) {
+                    imgArticulo.ImageUrl = "https://img.freepik.com/vector-gratis/ilustracion-icono-galeria_53876-27002.jpg?size=626&ext=jpg&ga=GA1.1.1687694167.1713916800&semt=ais";
+                }
+                else {
+                    imgArticulo.ImageUrl = articulo.Imagen.UrlImagen;
+                }
+
                 litNombre.Text = articulo.Nombre;
                 litPrecio.Text = articulo.Precio.ToString("F2");
                 litMarca.Text = articulo.Marca.Descripcion;
