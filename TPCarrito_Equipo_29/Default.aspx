@@ -16,11 +16,15 @@
         }
     </style>
   
-    <div class="input-group d-flex mb-3" style="width: 500px; height: 40px;"> 
-        <asp:TextBox ID="txtBuscar" class="form-control me-2" runat="server" placeholder = "Buscar..." ></asp:TextBox><%= GetBuscarValue() %>
+    <div class="d-flex flex-column mb-3" style="width: 500px;">
+    <div class="input-group d-flex mb-3" style="height: 40px;">
+        <asp:TextBox ID="txtBuscar" class="form-control me-2" runat="server" placeholder="Buscar..."></asp:TextBox><%= GetBuscarValue() %>
         <asp:LinkButton ID="btnBuscar" runat="server" CssClass="btn btn-outline-info" OnClick="btnBuscar_Click" Text="Buscar" style="width: 20%; height: 100%;" />
+    </div>
+    <div class="d-flex">
         <asp:DropDownList ID="ddlFiltroPrecio" class="form-control me-2" OnSelectedIndexChanged="ddlFiltroPrecio_Click" runat="server" AutoPostBack="true"></asp:DropDownList>
     </div>
+</div>
 
     
     <!-- Estas son las Tarjetas -->

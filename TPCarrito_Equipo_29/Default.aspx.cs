@@ -20,8 +20,8 @@ namespace TPCarrito_Equipo_29
             {
                 LoadData();
                 ddlFiltroPrecio.Items.Insert(0, new ListItem("Seleccionar opción", ""));
-                ddlFiltroPrecio.Items.Add(new ListItem("De menor a mayor", "1"));
-                ddlFiltroPrecio.Items.Add(new ListItem("De mayor a menor", "2"));
+                ddlFiltroPrecio.Items.Add(new ListItem("De menor a mayor precio", "1"));
+                ddlFiltroPrecio.Items.Add(new ListItem("De mayor a menor precio", "2"));
                 ddlFiltroPrecio.Items[0].Attributes["disabled"] = "disabled";
                 ddlFiltroPrecio.Items[0].Selected = true;
 
@@ -136,7 +136,10 @@ namespace TPCarrito_Equipo_29
             {
                 FiltrarArticulos(string.Empty, valor);
             }
-
+            if(valor == 2)
+            {
+                FiltrarArticulos(string.Empty, valor);
+            }
 
         }
 
@@ -234,6 +237,13 @@ namespace TPCarrito_Equipo_29
                         break;
 
                         case 2:
+                        articulosFiltrados = listArticulos.OrderByDescending(s => s.Precio).ToList();
+                        foreach (var item in articulosFiltrados)
+                        {
+                            if (!CargarImagen(item.Imagen.UrlImagen))
+                            { item.Imagen.UrlImagen = "https://img.freepik.com/vector-gratis/ilustracion-icono-galeria_53876-27002.jpg?size=626&ext=jpg&ga=GA1.1.1687694167.1713916800&semt=ais"; }
+
+                        }
                         break;
 
                     case 3:
