@@ -181,6 +181,7 @@ namespace TPCarrito_Equipo_29
         {
             string texto = txtBuscar.Text;
             FiltrarArticulos(texto);
+            
         }
 
         private void FiltrarArticulos(string terminoBusqueda)

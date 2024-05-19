@@ -3,10 +3,22 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     
+    <style>
+        
+        #pagination a {
+            color: black; 
+            background-color: white; 
+            border: 1px solid grey;
+        }
+
+        #pagination a:hover {
+            background-color: white; 
+        }
+    </style>
   
     <div class="input-group d-flex mb-3">
-        <asp:TextBox ID="txtBuscar" class="form-control me-2" runat="server"></asp:TextBox>
-        <asp:LinkButton ID="btnBuscar" runat="server" CssClass="btn btn-primary" OnClick="btnBuscar_Click" Text="Buscar" />
+        <asp:TextBox ID="txtBuscar" class="form-control me-2" runat="server" ></asp:TextBox>
+        <asp:LinkButton ID="btnBuscar" runat="server" CssClass="btn btn-outline-info" OnClick="btnBuscar_Click" Text="Buscar" />
     </div>
 
     
@@ -23,9 +35,9 @@
                         <img class="card-img-top" src='<%# Eval("Imagen.UrlImagen") %>' alt="Imagen del artículo">
                         <div class="card-body">
                             <h5 class="card-title"><%# Eval("Nombre") %></h5>
-                            <p class="card-text">Precio: <b>$<%# Eval("Precio") %></b></p> <!--nuevo-->
-                        <asp:LinkButton ID="btnAgregar" runat="server" CssClass="btn btn-success" OnClick="btnAgregar_Click" CommandArgument='<%# Eval("Id") %>' Text="Agregar" />   <!--nuevo-->
-                        <asp:LinkButton ID="btnDetalles" runat="server" CssClass="btn btn-outline-success" Onclick="btnDetalles_Click" CommandArgument='<%# Eval("Id") %>'  Text="Ver detalles" />   <!--nuevo-->
+                            <p class="card-text">Precio: <b>$<%# Eval("Precio") %></b></p> 
+                        <asp:LinkButton ID="btnAgregar" runat="server" CssClass="btn btn-success" OnClick="btnAgregar_Click" CommandArgument='<%# Eval("Id") %>' Text="Agregar" />   
+                        <asp:LinkButton ID="btnDetalles" runat="server" CssClass="btn btn-outline-success" Onclick="btnDetalles_Click" CommandArgument='<%# Eval("Id") %>'  Text="Ver detalles" />   
                         </div>
                     </div>
                 </div>
@@ -34,7 +46,7 @@
     </div>
    
     <div class="d-flex justify-content-center mt-3">
-        <ul class="pagination pagination-md" id="pagination" >  <!--nuevo-->
+        <ul class="pagination pagination-md" id="pagination" >  
             <asp:Literal ID="litPagination" runat="server"></asp:Literal>
         </ul>
     </div>
