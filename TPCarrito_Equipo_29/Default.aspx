@@ -16,9 +16,9 @@
         }
     </style>
   
-    <div class="input-group d-flex mb-3">
-        <asp:TextBox ID="txtBuscar" class="form-control me-2" runat="server" ></asp:TextBox>
-        <asp:LinkButton ID="btnBuscar" runat="server" CssClass="btn btn-outline-info" OnClick="btnBuscar_Click" Text="Buscar" />
+    <div class="input-group d-flex mb-3" style="width: 500px; height: 40px;"> <!-- trabajar margenes -->
+        <asp:TextBox ID="TextBox1" class="form-control me-2" runat="server" placeholder = "Buscar..." ></asp:TextBox><!--<asp:TextBox ID="txtBuscar" class="form-control me-2" runat="server" style="width: 15%; height: 100%;"  ></asp:TextBox>-->
+        <asp:LinkButton ID="btnBuscar" runat="server" CssClass="btn btn-outline-info" OnClick="btnBuscar_Click" Text="Buscar" style="width: 20%; height: 100%;" />
     </div>
 
     
