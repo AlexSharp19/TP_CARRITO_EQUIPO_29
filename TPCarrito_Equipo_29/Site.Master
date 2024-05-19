@@ -46,6 +46,10 @@
             <div class="container">
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        <a class="navbar-brand" href="#">
+                         <img src="https://us.123rf.com/450wm/redlinevector/redlinevector1510/redlinevector151006355/46814638-icono-del-peque%C3%B1o-grupo-de-siluetas-de-personas.jpg?ver=6" width="30" height="30" class="d-inline-block align-top" alt="">
+                             Equipo-29
+                        </a>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/">Artículos</a></li>
                         <li class="nav-item">
                             <a class="nav-link" runat="server" href="~/Carrito">
