@@ -31,7 +31,10 @@ namespace TPCarrito_Equipo_29
                     
                     panelFichaTecnica.Visible = false;
                 }
+
+                ActualizarCarrito();
             }
+
 
         }
 
@@ -138,19 +141,18 @@ namespace TPCarrito_Equipo_29
                                 ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
                             }
                         }
+                            
 
-                        ActualizarCarrito();
                     }
                     catch (Exception ex)
                     {
                         throw new Exception("Ocurrió un error al intentar obtener los artículos: " + ex.Message);
                     }
                 }
-                else
-                {
-                    
-                }
+                
             }
+
+            ActualizarCarrito();
         }
 
     }
