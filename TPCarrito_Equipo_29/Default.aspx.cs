@@ -19,10 +19,16 @@ namespace TPCarrito_Equipo_29
             if (!IsPostBack)
             {
                 LoadData();
+                ddlFiltroPrecio.Items.Insert(0, new ListItem("Seleccionar opción", ""));
+                ddlFiltroPrecio.Items.Add(new ListItem("De menor a mayor", "1"));
+                ddlFiltroPrecio.Items.Add(new ListItem("De mayor a menor", "2"));
+                ddlFiltroPrecio.Items[0].Attributes["disabled"] = "disabled";
+                ddlFiltroPrecio.Items[0].Selected = true;
+
 
                 if (!string.IsNullOrEmpty(Request.QueryString["buscar"]))
                 {
-                    FiltrarArticulos(Request.QueryString["buscar"]);
+                    FiltrarArticulos(Request.QueryString["buscar"], 3);
                 }
                 BindListView();
                 GeneratePagination();
@@ -121,6 +127,19 @@ namespace TPCarrito_Equipo_29
             Response.Redirect("DetalleArticulos.aspx?id=" + articuloID);
         }
 
+        protected void ddlFiltroPrecio_Click(object sender, EventArgs e)
+        {
+            
+            int valor = int.Parse(ddlFiltroPrecio.SelectedValue);
+
+            if (valor == 1)
+            {
+                FiltrarArticulos(string.Empty, valor);
+            }
+
+
+        }
+
         private void ActualizarCarrito()
         {
             if (Session["articulosSeleccionados"] != null)
@@ -188,26 +207,50 @@ namespace TPCarrito_Equipo_29
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             string texto = txtBuscar.Text;
-            FiltrarArticulos(texto);
+            FiltrarArticulos(texto, 3);
             
         }
 
-        private void FiltrarArticulos(string terminoBusqueda)
+        private void FiltrarArticulos(string terminoBusqueda, int param)
         {
             var articuloBusinees = new ArticuloBussines();
+            var articulosFiltrados = new List<ArticuloEntity>();
+
             try
 
             {
+                
                 listArticulos = articuloBusinees.GetArticulos();
-                var articulosFiltrados = listArticulos
+                switch (param)
+                {
+                    case 1:
+                        articulosFiltrados = listArticulos.OrderBy(s =>  s.Precio).ToList();
+                        foreach (var item in articulosFiltrados)
+                        {
+                            if (!CargarImagen(item.Imagen.UrlImagen))
+                            { item.Imagen.UrlImagen = "https://img.freepik.com/vector-gratis/ilustracion-icono-galeria_53876-27002.jpg?size=626&ext=jpg&ga=GA1.1.1687694167.1713916800&semt=ais"; }
+
+                        }
+                        break;
+
+                        case 2:
+                        break;
+
+                    case 3:
+                        articulosFiltrados = listArticulos
                                         .Where(a => a.Nombre.IndexOf(terminoBusqueda, StringComparison.OrdinalIgnoreCase) >= 0)
                                         .ToList();
 
-                foreach (var item in articulosFiltrados) {
-                    if (!CargarImagen(item.Imagen.UrlImagen)) 
-                    { item.Imagen.UrlImagen = "https://img.freepik.com/vector-gratis/ilustracion-icono-galeria_53876-27002.jpg?size=626&ext=jpg&ga=GA1.1.1687694167.1713916800&semt=ais"; }
-                
+                        foreach (var item in articulosFiltrados)
+                        {
+                            if (!CargarImagen(item.Imagen.UrlImagen))
+                            { item.Imagen.UrlImagen = "https://img.freepik.com/vector-gratis/ilustracion-icono-galeria_53876-27002.jpg?size=626&ext=jpg&ga=GA1.1.1687694167.1713916800&semt=ais"; }
+
+                        }
+                        break;
+
                 }
+                
                 // Actualizar el control ListView con los artículos filtrados
                 var pagedDataSource = new PagedDataSource
                 {
@@ -230,6 +273,8 @@ namespace TPCarrito_Equipo_29
                 }
 
                 litPagination.Text = paginationHtml.ToString();
+
+                
 
             }
             catch (Exception ex)
