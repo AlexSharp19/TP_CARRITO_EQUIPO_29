@@ -4,27 +4,30 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     
     <style>
-        
         #pagination a {
             color: black; 
             background-color: white; 
             border: 1px solid grey;
         }
-
         #pagination a:hover {
             background-color: white; 
         }
+        #txtBuscar {
+            width: 253.18px;
+        }
     </style>
   
-    <div class="d-flex flex-column mb-3" style="width: 500px;">
-    <div class="input-group d-flex mb-3" style="height: 40px;">
-        <asp:TextBox ID="txtBuscar" class="form-control me-2" runat="server" placeholder="Buscar..."></asp:TextBox><%= GetBuscarValue() %>
-        <asp:LinkButton ID="btnBuscar" runat="server" CssClass="btn btn-outline-info" OnClick="btnBuscar_Click" Text="Buscar" style="width: 20%; height: 100%;" />
+    <div class="d-flex flex-column mb-3" style="width: 1000px;">
+
+    <div class="input-group d-flex mb-3" style="width: 253.18px; height: 40px;"> <!--input-group -->
+        <asp:TextBox ID="txtBuscar" class="form-control me-2"  style="flex: 1;" runat="server" placeholder="Buscar..."></asp:TextBox><%= GetBuscarValue() %>
+        <asp:LinkButton ID="btnBuscar" runat="server" CssClass="btn btn-outline-info" OnClick="btnBuscar_Click" Text="Buscar" style="width: auto; height: 100%;"/>
     </div>
+
     <div class="d-flex">
-        <asp:DropDownList ID="ddlFiltroPrecio" class="form-control me-2" OnSelectedIndexChanged="ddlFiltroPrecio_Click" runat="server" AutoPostBack="true"></asp:DropDownList>
+        <asp:DropDownList ID="ddlFiltroPrecio" class="form-control me-2" style="width: 253.18px;" OnSelectedIndexChanged="ddlFiltroPrecio_Click" runat="server" AutoPostBack="true"></asp:DropDownList>
     </div>
-</div>
+    </div>
 
     
     <!-- Estas son las Tarjetas -->
